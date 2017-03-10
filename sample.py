@@ -7,10 +7,12 @@ Shows how to authorize users with Github.
 from flask import Flask, request, g, session, redirect, url_for
 from flask import render_template_string
 from flask_github import GitHub
+from flask_bootstrap import Bootstrap
 
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+
 
 import json
 
@@ -134,6 +136,12 @@ def user():
 def repo():
 	repo_dict = github.get('repos/cenkalti/github-flask')
 	return str(repo_dict)
+
+###########################################################
+#spotify
+@app.route('/makeup')
+def makeup(dictionary):
+	return redirect()
 
 
 if __name__ == '__main__':
