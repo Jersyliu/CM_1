@@ -1,0 +1,5 @@
+graft CM1/templates
+graft CM1/static
+include CM1/schema.sql
+
+

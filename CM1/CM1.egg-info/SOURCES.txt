@@ -1,0 +1,9 @@
+MANIFEST.in
+CM1/CM1.py
+CM1/__init__.py
+CM1/schema.sql
+CM1.egg-info/PKG-INFO
+CM1.egg-info/SOURCES.txt
+CM1.egg-info/dependency_links.txt
+CM1.egg-info/requires.txt
+CM1.egg-info/top_level.txt
