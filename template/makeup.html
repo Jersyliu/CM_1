@@ -1,6 +1,9 @@
-<section id="woz-content">
+{% extends "bootstrap/base.html" %}
 
-  <div class="container">
+{% block title %}This is an example page{% endblock %}
+
+{% block navbar %}
+<div class="navbar navbar-fixed-top">
     <h1 class="page-title">MakeUp</h1>
 
 
@@ -14,10 +17,8 @@
         </a>
       </li>
     </ul>
-
-  </div>
-
-
+</div>
+{% endblock %}
 
 
-</section>
+
