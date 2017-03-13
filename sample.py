@@ -151,7 +151,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def homepage():
-    html = render_template('homepage.html')
+    html = render_template('landing.html')
     return html
 
 @app.route('/search/<name>')
@@ -159,7 +159,7 @@ def search(name):
     data = spotify.search_by_artist_name(name)
     api_url = data['artists']['href']
     items = data['artists']['items']
-    html = render_template('search.html', artist_name=name, results=items, api_url=api_url)
+    # html = render_template('search.html', artist_name=name, results=items, api_url=api_url)
     return html
 
 @app.route('/artist/<id>')
@@ -169,14 +169,14 @@ def artist(id):
     if artist['images']:
         image_url = artist['images'][0]['url']
     else:
-        image_url = 'http://placecage.com/600/400'
+        image_url = '/static/images/happy.png'
 
     tracksdata = spotify.get_artist_top_tracks(id)
     tracks = tracksdata['tracks']
 
     artistsdata = spotify.get_related_artists(id)
     relartists = artistsdata['artists']
-    html = render_template('artist.html', artist=artist, related_artists=relartists, image_url=image_url, tracks=tracks)
+    html = render_template('makeup.html', artist=artist, image_url=image_url, tracks=tracks)
     return html
 
 
