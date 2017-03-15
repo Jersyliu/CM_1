@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+    /* Remove the navbar's default rounded borders and increase the bottom margin */ 
+    .navbar {
+      margin-bottom: 50px;
+      border-radius: 0;
+    }
+    
+    /* Remove the jumbotron's default bottom margin */ 
+     .jumbotron {
+      margin-bottom: 0;
+    }
+   
+    /* Add a gray background color and some padding to the footer */
+    footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="jumbotron">
+  <div class="container text-center">
+    <h1>Hi, {{ username }}. </h1>      
+    <p>Here is your commit time. Click on it to look what is happen out there when your are coding.</p>
+  </div>
+</div>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">Logo</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">Products</a></li>
+        <li><a href="#">Deals</a></li>
+        <li><a href="#">Stores</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="{{ url_for("logout") }}"><span class="glyphicon glyphicon-user"></span> Logout </a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+{% for three in repos %}
+  <div class="container">    
+    <div class="row">
+      {% for info in three %}
+        <div class="col-sm-4">
+           <div class="panel panel-info">
+             <div class="panel-heading">
+               <h3 class="panel-title">{{ info["name"] }}</h3>
+             </div>
+             <div class="panel-body">
+               <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {{ info["created_at"] }} <span class="caret"></span>
+                </button>
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">{{ info["created_at"] }}</button>
+                <ul class="dropdown-menu list-group">
+                  {% for repo in tumblrs %}
+                    {% if repo == info["name"] %}
+                       {% for i in tumblrs[repo] %}
+                          {% for j in i %}
+                             {% if i[j] != None %}
+                                <li class="list-group-item list-group-item-success"><a href="#">{{ j }} : {{ i[j] }}</a></li>
+                             {% endif %}
+                          {% endfor %}
+                          <li role="separator" class="divider"></li>
+                       {% endfor %}
+                    {% endif %}
+                  {% endfor %}
+                </ul>
+                <!-- Modal -->
+                <div id="myModal" class="modal fade" role="dialog">
+                  <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">What's going on~~</h4>
+                      </div>
+                      <div class="modal-body">
+                        {% for repo in tumblrs %}
+                          {% if repo == info["name"] %}
+                             {% for i in tumblrs[repo] %}
+                                {% for j in i %}
+                                   {% if i[j] != None %}
+                                      <li class="list-group-item list-group-item-success"><a href="#">{{ j }} : {{ i[j] }}</a></li>
+                                   {% endif %}
+                                {% endfor %}
+                                <br>
+                             {% endfor %}
+                          {% endif %}
+                        {% endfor %}
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+             </div>
+           </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div><br><br>
+   
+{% endfor %}
+
+
+
+
+</body>
+</html>

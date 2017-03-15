@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+   <head>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+   	  <style type="text/css">
+        a {
+        text-decoration: none;
+        }
+   	  	div#loading {
+        margin: auto;
+		    width: 600px;
+		    height: 600px;
+        display: none;
+		    background: url(/static/loading.gif) no-repeat;
+		    cursor: wait;
+		    }
+   	  </style>
+   </head>
+   <body>
+   	<div id="loading"></div>
+    <div id="content">
+      <h1>Hello! Please login with your github account and we will list all your commit time. </h1>
+      <br><br>
+      
+      <button onclick="loading();"><a style="none" href="{{ url_for("login") }}">Login</a></button>
+    </div>  
+   </body>
+   <script type="text/javascript">
+        function loading(){
+            $("body").css( "background", "black" );
+            $("body").css( "cursor", "wait" );
+            $("#loading").show();
+            $("#content").hide();       
+        }
+   </script>
+</html>
