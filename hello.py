@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from flask import Flask
 from flask.ext.github import GitHub
+from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
 app.config['GITHUB_CLIENT_ID'] = 'fd7e54a1f4ac9becf832'
@@ -20,6 +21,10 @@ def hello():
 @app.route('/login')
 def login():
     return github.authorize()
+
+@app.route('/makeup')
+def makeup():
+	return
 
 @app.route('/github-callback')
 @github.authorized_handler

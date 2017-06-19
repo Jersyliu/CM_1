@@ -3,10 +3,12 @@
 from flask import Flask, request, g, session, redirect, url_for
 from flask import render_template_string
 from flask_github import GitHub
+from flask_bootstrap import Bootstrap
 
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+
 
 import json
 
@@ -130,6 +132,48 @@ def user():
 def repo():
 	repo_dict = github.get('repos/cenkalti/github-flask')
 	return str(repo_dict)
+
+###########################################################
+#spotify
+@app.route('/makeup')
+def makeup(dictionary):
+	return redirect()
+
+
+from flask import render_template, Flask
+from datafoo import spotify
+
+app = Flask(__name__)
+
+@app.route('/')
+def homepage():
+    html = render_template('landing.html')
+    return html
+
+@app.route('/search/<name>')
+def search(name):
+    data = spotify.search_by_artist_name(name)
+    api_url = data['artists']['href']
+    items = data['artists']['items']
+    # html = render_template('search.html', artist_name=name, results=items, api_url=api_url)
+    return html
+
+@app.route('/artist/<id>')
+def artist(id):
+    artist = spotify.get_artist(id)
+
+    if artist['images']:
+        image_url = artist['images'][0]['url']
+    else:
+        image_url = '/static/images/happy.png'
+
+    tracksdata = spotify.get_artist_top_tracks(id)
+    tracks = tracksdata['tracks']
+
+    artistsdata = spotify.get_related_artists(id)
+    relartists = artistsdata['artists']
+    html = render_template('makeup.html', artist=artist, image_url=image_url, tracks=tracks)
+    return html
 
 
 if __name__ == '__main__':
